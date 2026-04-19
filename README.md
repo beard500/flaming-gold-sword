@@ -41,7 +41,7 @@ minecraft_version=1.21.1
 yarn_mappings=1.21.1+build.3
 loader_version=0.16.5
 fabric_version=0.102.1+1.21.1
-polymer_version=0.11.1+1.21.1
+polymer_version=0.9.19+1.21.1
 ```
 
 Find your correct values at:
