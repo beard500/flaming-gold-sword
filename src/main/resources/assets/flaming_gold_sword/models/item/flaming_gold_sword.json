@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "flaming_gold_sword:item/flaming_gold_sword"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "flaming_gold_sword",
+  "version": "${version}",
+  "name": "Flaming Gold Sword",
+  "description": "A flaming gold sword with fire aspect and flame particles. Players don't need to install anything — the resource pack is sent automatically.",
+  "authors": ["You"],
+  "license": "MIT",
+  "icon": "assets/flaming_gold_sword/textures/item/flaming_gold_sword.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.flamingsword.FlamingSwordMod"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "polymer-core": "*",
+    "polymer-resource-pack": "*"
+  }
+}
