@@ -12,6 +12,7 @@ import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
@@ -32,9 +33,9 @@ public class FlamingSwordMod implements ModInitializer {
             Identifier.of(MOD_ID, "flaming_gold_sword"),
             new FlamingSwordItem(
                     ToolMaterials.NETHERITE,
-                    5,
-                    -2.4f,
-                    new Item.Settings().fireproof()
+                    new Item.Settings()
+                            .fireproof()
+                            .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 5, -2.4f))
             )
     );
 

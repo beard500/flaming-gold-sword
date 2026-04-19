@@ -30,8 +30,8 @@ import java.util.List;
 public class FlamingSwordItem extends SwordItem implements PolymerItem {
     private static final int SPECIAL_COOLDOWN_TICKS = 30 * 20;
 
-    public FlamingSwordItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
-        super(material, attackDamage, attackSpeed, settings);
+    public FlamingSwordItem(ToolMaterial material, Settings settings) {
+        super(material, settings);
     }
 
     @Override
