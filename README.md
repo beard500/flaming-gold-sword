@@ -1,40 +1,89 @@
-# Flaming Gold Sword (Fabric server-side mod)
+# Flaming Gold Sword
 
-Adds a flaming gold sword to your Fabric server. Players **don't install anything** — the mod auto-sends the required resource pack on join.
+A custom 3D sword for Fabric Minecraft servers. Players don't install anything — the server sends the model and textures to them automatically when they join.
 
-## What the sword does
+---
 
-**Stats**
-- Damage: ~8 per hit (netherite-tier +1)
-- Attack speed: 1.6 per second (slow, like netherite)
-- Durability: **unbreakable**
-- Fireproof (won't despawn in lava)
+## What you need before you start
 
-**Left-click an enemy** → hits for full damage + sets on fire for 6s + **AoE splash**: everything within 2 blocks of the target takes 3 fire damage and burns for 4s. Spawns flame, lava, and smoke particles.
+Three `.jar` files. They all go into your server's `mods` folder.
 
-**Left-click the ground** (top face of a block) → **places lava** on top of it. Emits flame particles + lava-bucket sound.
+1. **Fabric API** — almost every Fabric server already has this. Look in your server's `mods` folder for a file starting with `fabric-api-`. If it's not there, download it from https://modrinth.com/mod/fabric-api (pick the version matching your Minecraft version).
 
-**Right-click** (cooldown: 30s) → **Flame Wave**: launches a cone of fire in front of you up to 8 blocks out. Any enemy in the cone takes 6 damage and burns for 8s. Lots of fire particles.
+2. **Polymer** — download from https://modrinth.com/mod/polymer/versions. Pick the line matching your Minecraft version (e.g. for MC 1.21.1, get the one labeled `0.9.19+1.21.1` or similar).
 
-**Shift + right-click** (shares the 30s cooldown) → **Self-Ignite**: grants yourself Fire Resistance I + Strength I for 10 seconds. Big flame burst around you.
+3. **The Flaming Gold Sword .jar** — get it from this repo:
+   - Go to the **Actions** tab at the top of this GitHub page
+   - Click the most recent run with a green ✓
+   - Scroll to the bottom, click **flaming-gold-sword-jar** to download a zip
+   - Unzip it — inside is `flaming-gold-sword-1.0.0.jar`
 
-**Passive while held** → Fire Resistance is refreshed every second, so you're immune to fire and lava as long as the sword is in your main hand. (Effect doesn't linger after you put it away.)
+> ⚠️ **Minecraft version matters.** This is built for Minecraft **1.21.1**. If your server is on a different version, see [Different Minecraft version?](#different-minecraft-version) at the bottom.
 
-**Obtaining** → **5% drop from Blazes.** A plays a Totem sound when one drops. Ops can also spawn it via `/give` (see below).
+---
 
-## How to get the built `.jar`
+## Install on your server
 
-This repo builds itself via GitHub Actions. You don't need Java installed locally.
+1. Open your server hosting control panel.
+2. **Stop the server.** (Don't skip this — files might not load right if the server is running.)
+3. Open the file manager and navigate to the `mods` folder.
+4. Upload all three `.jar` files into `mods`.
+5. **Start the server.**
+6. Wait until it says "Done" in the console (means it's ready).
 
-1. After `git push` finishes (done by the CLI setup — see `UPLOAD.md`), go to your GitHub repo in a browser.
-2. Click the **Actions** tab.
-3. Wait ~90 seconds for the run to go green ✓.
-4. Click the run name → scroll to **Artifacts** → click `flaming-gold-sword-jar` to download a zip.
-5. Unzip → you have `flaming-gold-sword-1.0.0.jar`.
+---
 
-## Check your Minecraft version BEFORE pushing
+## Get the sword in-game
 
-This defaults to **Minecraft 1.21.1**. If your server runs a different version, edit `gradle.properties` **before pushing** — the top 5 lines:
+Join the server. The first time you join, you'll see a popup that says *"This server is requesting a resource pack"*. **Click Yes / Proceed.** The sword needs this to look right.
+
+Then in chat, type:
+
+```
+/give @s flaming_gold_sword:flaming_gold_sword
+```
+
+You'll get the sword in your inventory. (Only ops can run `/give`.)
+
+You can also fight Blazes in the Nether — they have a **5% chance** to drop the sword when killed. You'll hear a Totem sound when one drops, so you'll know.
+
+---
+
+## How to use it (test each thing)
+
+| What you do | What happens |
+|---|---|
+| **Left-click an enemy** | Hits for ~8 damage, sets them on fire for 6 seconds, AND damages everything within 2 blocks (3 damage + 4s burn) |
+| **Left-click the top of a block** | Places lava on top of that block 🔥 |
+| **Right-click in the air** | **Flame Wave** — shoots fire in a cone in front of you, 8 blocks long. Burns enemies for 6 damage + 8s |
+| **Shift + right-click** | **Self-Ignite** — gives you Fire Resistance + Strength for 10 seconds |
+| **Just hold it** | You're immune to fire and lava as long as it's in your hand |
+
+**Cooldown:** Right-click and Shift+right-click share a 30-second cooldown.
+
+**Durability:** None. The sword never breaks.
+
+**Fireproof:** If you drop it in lava, it won't burn up.
+
+---
+
+## Things to watch out for
+
+- **Sword looks plain / like a netherite sword?** The player rejected the resource pack. Have them disconnect, rejoin, and click **Yes** when prompted. Or open `server.properties` and set `require-resource-pack=true` — this forces them to accept (kicks them if they don't).
+- **`/give` says unknown item?** The mod didn't load. Check your server console for red errors — usually it's a missing dependency (Fabric API or Polymer).
+- **Left-click on a block doesn't place lava?** You have to click the **top face** of the block (looking down at it). Sides and bottom don't work.
+- **Right-click does nothing?** You're probably still in cooldown — wait 30 seconds.
+- **Building the .jar fails on GitHub Actions?** Open the failed run, scroll to the red error. Most common: Minecraft version mismatch.
+
+---
+
+## Different Minecraft version?
+
+This is built for **MC 1.21.1**. If your server is on something else (e.g. 1.20.4, 1.21.4), you need to edit one file before downloading the .jar:
+
+1. In this repo, click `gradle.properties`.
+2. Click the pencil icon (Edit).
+3. Change these 5 lines to match your version:
 
 ```
 minecraft_version=1.21.1
@@ -44,43 +93,9 @@ fabric_version=0.102.1+1.21.1
 polymer_version=0.9.19+1.21.1
 ```
 
-Find your correct values at:
-- https://fabricmc.net/develop/ (pick your MC version → copy the Yarn/Loader/Fabric API values)
-- https://modrinth.com/mod/polymer/versions (pick the line matching your MC version)
-
-Also update `src/main/resources/fabric.mod.json`, change `"minecraft": "~1.21.1"` to match your version.
-
-## How to install on your Fabric server
-
-Your server needs three mods in `/mods/`:
-
-1. **Fabric API** — you almost certainly have this already (`fabric-api-*.jar`). If not: https://modrinth.com/mod/fabric-api
-2. **Polymer** — from https://modrinth.com/mod/polymer (match the MC version). Drop the downloaded `.jar` into `/mods/`.
-3. **This mod** — the `flaming-gold-sword-1.0.0.jar` you downloaded from GitHub Actions. Drop it into `/mods/`.
-
-Then:
-1. Stop your server from your host's control panel.
-2. Upload the three `.jar` files via the host's file manager into `/mods/`.
-3. Start your server.
-4. Join the server. On first join, clients get prompted to download the resource pack — tell players to accept ("Yes" or "Proceed"). Once accepted, the flaming gold sword renders correctly in their inventory and hand.
-
-## Getting one in-game
-
-```
-/give @s flaming_gold_sword:flaming_gold_sword
-```
-
-Or farm Blazes — 5% drop rate per kill.
-
-## Troubleshooting
-
-- **"Unknown item flaming_gold_sword:flaming_gold_sword"** — the mod didn't load. Check server logs for errors about missing dependencies (Fabric API / Polymer / Java version mismatch).
-- **Sword looks like a netherite sword, not a gold pixel sword** — the client rejected the resource pack. Tell them to accept it when prompted, or enable `require-resource-pack=true` in `server.properties` to force it.
-- **Build fails on GitHub Actions** — open the failed run, read the red log. Most common cause: MC version mismatch between `gradle.properties` and available Fabric/Polymer versions. Double-check all 5 version numbers at the links above.
-- **"Incompatible mod loader"** — your server is running Minecraft, not Fabric, or a different MC version than the jar was built for. Verify with `/version` in-game.
-- **Abilities do nothing / left-click on ground doesn't place lava** — make sure you're left-clicking the **top** face of a block (looking down). Side and bottom faces do nothing special.
-
-## What this mod is NOT
-
-- The fancy 7-animation flaming dance you saw in Blockbench does **not** carry over — Minecraft's in-hand item renderer doesn't play Blockbench keyframes. The in-world look is a static 16x16 pixel-art sword. The flame particles (on hit + idle + abilities) are what makes it feel alive in-game.
-- Future work: a "3D in-hand model" is possible by shipping the Blockbench `.bbmodel` converted to Minecraft's item model JSON format. Not in v1 because the free-form rotations don't all convert cleanly.
+4. Find the right values at:
+   - https://fabricmc.net/develop/ — pick your MC version, copy Yarn / Loader / Fabric API
+   - https://modrinth.com/mod/polymer/versions — pick the one matching your MC version
+5. Also edit `src/main/resources/fabric.mod.json` and change `"minecraft": "~1.21.1"` to your version.
+6. Commit the changes. GitHub Actions will rebuild automatically.
+7. Download the new `.jar` from the Actions tab and drop it into `mods`.
